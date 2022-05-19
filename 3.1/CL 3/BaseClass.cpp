@@ -40,13 +40,13 @@ void BaseClass::printRoot(unsigned indent) {
 }
 
 
-BaseClass* BaseClass::findParent(const std::string& parentName) {
-	if (parentName == this->getName())
+BaseClass* BaseClass::findObject(const std::string& objectName) {
+	if (objectName == this->getName())
 		return this;
 
 	for (BaseClass*& child : children)
-		if (child->findParent(parentName) != nullptr)
-			return child->findParent(parentName);
+		if (child->findObject(objectName) != nullptr)
+			return child->findObject(objectName);
 
 
 	return nullptr;
@@ -76,17 +76,15 @@ bool BaseClass::areAllParentsReady(BaseClass*& object) {
 		return true;
 
 	if (object->getParent()->isReady)
-		return (areAllParentsReady(object->getParent()));
+		return true;
 	else
 		return false;
 }
 
 
 void BaseClass::setTrueReadiness(BaseClass* object) {
-	if (areAllParentsReady(object))
+	if (object->areAllParentsReady(object))
 		object->isReady = true;
-	else
-		object->isReady = false;
 }
 
 
@@ -94,7 +92,7 @@ void BaseClass::setFalseReadiness(BaseClass*& object) {
 	object->isReady = false;
 	if (object->children.size())
 		for (BaseClass*& child : children)
-			setFalseReadiness(child);
+			child->setFalseReadiness(child);
 }
 
 

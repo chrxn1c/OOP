@@ -11,7 +11,6 @@
 Application::Application(BaseClass* parent, std::string name) : BaseClass(parent, name) {
 	this->changeParent(parent);
 	this->setName(name);
-	this->setTrueReadiness(this);
 }
 
 
@@ -23,8 +22,8 @@ void Application::inputHierarchy() {
 	std::string parentName, childName;
 	int nodeNumber = 0;
 
-	while (std::cin >> parentName >> childName >> nodeNumber && parentName != "endtree") {
-		BaseClass* parent = this->findParent(parentName);
+	while (std::cin >> parentName && parentName != "endtree" && std::cin >> childName >> nodeNumber) {
+		BaseClass* parent = this->findObject(parentName);
 		BaseClass* child;
 
 		switch (nodeNumber) {
@@ -39,8 +38,8 @@ void Application::inputHierarchy() {
 	std::string objectName;
 	int objectReadiness;
 
-	while (std::cin >> objectName >> objectReadiness) {
-		BaseClass* object = findParent(objectName);
+	while (std::cin >> objectName >> objectReadiness && objectName != "Z") {
+		BaseClass* object = findObject(objectName);
 		if (objectReadiness)
 			object->setTrueReadiness(object);
 		else
@@ -54,11 +53,12 @@ void Application::inputHierarchy() {
 void Application::buildHierarchy() {
 	this->inputHierarchy();
 
-	std::cout << "Object tree";
-	this->printRoot();
-
-	std::cout << std::endl << "The tree of objects and their readiness";
-	this->printReadinessRoot();
+	if (this->getName() != "") {
+		std::cout << "Object tree";
+		this->printRoot();
+		std::cout << std::endl << "The tree of objects and their readiness";
+		this->printReadinessRoot();
+	}
 }
 
 

@@ -8,7 +8,7 @@ class BaseClass {
 private:
 	std::string name;
 	BaseClass* parent;
-	bool isReady;
+	bool isReady = false;
 protected:
 	std::vector <BaseClass*> children;
 public:
@@ -18,7 +18,7 @@ public:
 	void changeParent(BaseClass* newParent);
 	BaseClass*& getParent();
 	void printRoot(unsigned indent = 0);
-	BaseClass* findParent(const std::string& parentName);
+	BaseClass* findObject(const std::string& objectName);
 	void addChild(BaseClass* child);
 	~BaseClass();
 	void recursiveCleanUp();
