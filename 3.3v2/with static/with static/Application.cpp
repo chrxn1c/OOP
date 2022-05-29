@@ -224,7 +224,9 @@ void Application::findRouteObjectReport(const std::string& route, const BaseClas
 	if (whatObject == "object")
 		miscellaneousMessages.push_back("\nObject " + route + " not found");
 	else if (whatObject == "handlerObject")
-		miscellaneousMessages.push_back("\nHandler Object " + route + " not found");
+		miscellaneousMessages.push_back("\nHandler object " + route + " not found");
+
+	std::cin.ignore(32767, '\n');
 }
 
 
